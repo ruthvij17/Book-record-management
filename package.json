@@ -1,0 +1,26 @@
+{
+  "name": "book-record-management",
+  "version": "1.0.0",
+  "description": "Book record management (Library System)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruthvij17/Book-record-management.git"
+  },
+  "author": "Ruthvij R Chandan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ruthvij17/Book-record-management/issues"
+  },
+  "homepage": "https://github.com/ruthvij17/Book-record-management#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
