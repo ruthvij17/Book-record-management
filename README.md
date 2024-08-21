@@ -17,19 +17,48 @@ For one day the fine amount will be Rs.50
 POST: Create a new user
 GET: Get all the user information here
 
-## /users/{id}
+# /users/{id}
 
 GET: Get a user by passing their ID
 PUT: Update a user by their ID
 DELETE: Delete a user by ID (Check he/she still have a issued book) && (Is there any fine due to be paid)
 
 # Subscription Types
-
 3 months(Basic)
 6 months(Standard)
 12 months(Premium)
 
-if the subscription type is Standard  && if the subscription Date 06-08-2023
+if the subscription type is Standard  && if the subscription Date 06-08-2024 
+=>then subscription valid till 06-02-2025
+
+if the subscription type is basic  && if the subscription Date 06-08-2024 
+=>then subscription valid till 06-11-2024
+
+if the subscription type is Premium  && if the subscription Date 06-08-2024 
+=>then subscription valid till 06-08-2025
+
+Within subscription date >> if we miss the renewal  >>Rs.50 per day
+Subscription date is also been missed and also missed the renewal >> Rs.100 + Rs.50 per day
+
+
+For instance 1:
+
+>> Subscription type:Basic
+>> Book name:Book1
+>> Subscription Date: 06/08/2024
+>> Book borrowed Date: 07/08/2024
+>> Book renewal date: 23/08/2024
+>> If we submit the book on Date: 25/08/2024 then we have to pay 50*2=Rs.100 as a fine
+
+For instance 2:
+
+>> Subscription type:Basic
+>> Book name:Book1
+>> Subscription Date: 06/08/2024
+>> Book borrowed Date: 07/08/2024
+>> Book renewal date: 23/08/2024 
+>> Subscription exhausting date: 23/08/2024
+>> If we submit the book on Date: 25/08/2024 then we have to pay 100+50*2=Rs.200 as a fine
 
 # /users/subscription-details/{id}
 
