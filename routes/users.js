@@ -60,7 +60,7 @@ router.post("/", (req, res) => {
   const user = users.find((each) => each.id === id);
 
   if (user) {
-    return res.status(404).json({
+    return res.status(409).json({
       message: "User with the ID already exist",
       success: false,
     });
@@ -131,4 +131,43 @@ router.delete("/:id", (req, res) => {
   return res
     .status(200)
     .json({ success: true, message: "Deleted a user....", data: user });
+});
+
+/**
+ * Route: users/subscriptions-details/{id}
+ * Method:GET
+ * Description: Get all user subscription details
+ * Access: Public
+ * Parameters: ID
+ */
+
+router.get("/subscription-details/:id", (req, res) => {
+  const { id } = req.params;
+  const { user } = users.find((each) => each.id === id);
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User with the id did not exist",
+    });
+  }
+  const getDateInDays = (data = "") => {
+    let date;
+    if (data === "") {
+      date = new date();
+    } else {
+      date = new date(data);
+    }
+    let days = Math.floor(data / (1000 * 60 * 60 * 24));
+    return days;
+  };
+  const subscriptionType = (data = "") => {
+    if (user.subscriptionType == "basic") {
+      date = date + 90;
+    } else if (user.subscriptionType == "standard") {
+      date = date + 180;
+    } else if (user.subscriptionType == "premium") {
+      date = date + 365;
+    }
+  };
 });
