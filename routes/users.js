@@ -143,7 +143,7 @@ router.delete("/:id", (req, res) => {
 
 router.get("/subscription-details/:id", (req, res) => {
   const { id } = req.params;
-  const { user } = users.find((each) => each.id === id);
+  const user = users.find((each) => each.id === id);
 
   if (!user) {
     return res.status(404).json({
@@ -154,20 +154,49 @@ router.get("/subscription-details/:id", (req, res) => {
   const getDateInDays = (data = "") => {
     let date;
     if (data === "") {
-      date = new date();
+      date = new Date();
     } else {
-      date = new date(data);
+      date = new Date(data);
     }
-    let days = Math.floor(data / (1000 * 60 * 60 * 24));
+    let days = Math.floor(date / (1000 * 60 * 60 * 24));
     return days;
   };
-  const subscriptionType = (data = "") => {
-    if (user.subscriptionType == "basic") {
+  const subscriptionType = (date) => {
+    //let date;
+    if (user.subscriptionType == "Basic") {
       date = date + 90;
-    } else if (user.subscriptionType == "standard") {
+    } else if (user.subscriptionType == "Standard") {
       date = date + 180;
-    } else if (user.subscriptionType == "premium") {
+    } else if (user.subscriptionType == "Premium") {
       date = date + 365;
     }
+    return date;
   };
+  let returnDate = getDateInDays(user.returnDate);
+  let currentDate = getDateInDays();
+  let subscriptionDate = getDateInDays(user.subscriptionDate);
+  let subscriptionExpiration = subscriptionType(subscriptionDate);
+  // console.log("SubscriptionExpiration:", subscriptionExpiration);
+  // console.log("Current date:", currentDate);
+  // console.log(subscriptionExpiration - currentDate);
+
+  const data = {
+    ...user,
+    subscriptionExpired: subscriptionExpiration <= currentDate,
+    daysLeftForExpiration:
+      subscriptionExpiration <= currentDate
+        ? 0
+        : subscriptionExpiration - currentDate,
+    fine:
+      returnDate <= currentDate
+        ? subscriptionDate <= currentDate
+          ? 100
+          : 50
+        : 0,
+  };
+  return res.status(200).json({
+    success: true,
+    message: "Subscription details for the user is:",
+    data,
+  });
 });
