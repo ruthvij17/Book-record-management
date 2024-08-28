@@ -2,6 +2,8 @@ const express = require("express");
 
 const { users } = require("../data/users.json");
 
+const { userModal, bookModal } = require("../modals/index.js");
+
 const router = express.Router();
 
 module.exports = router;
