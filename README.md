@@ -81,3 +81,32 @@ GET: Get all issued books
 ## /books/issued/withFine
 GET: Get all issued books with their fine.
 
+
+(req, res) => {
+  const { id } = req.params;
+  const { data } = req.body;
+
+  const book = books.find((each) => each.id === id);
+
+  if (!book) {
+    return res.status(400).json({
+      success: false,
+      message: "Book did not found for this id",
+    });
+  }
+
+  const updateData = books.map((each) => {
+    if (each.id === id) {
+      return {
+        ...each,
+        ...data,
+      };
+    }
+    return each;
+  });
+  return res.status(200).json({
+    success: true,
+    message: "Updated a book by their ID",
+    data: updateData,
+  });
+});
